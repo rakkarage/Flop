@@ -5,19 +5,18 @@ public class Flop : UIBehaviour, IDragHandler
 {
 	public float Offset = 64f;
 	public Transform LookAt;
-	public Transform Content;
 	protected override void Start()
 	{
-		for (int i = 0; i < Content.childCount; i++)
+		for (int i = 0; i < transform.childCount; i++)
 		{
 			var x = i * Offset;
-			Drag(x, Content.GetChild(i));
+			Drag(x, transform.GetChild(i));
 		}
 		Order();
 	}
 	public void Drag(PointerEventData e)
 	{
-		foreach (Transform i in Content)
+		foreach (Transform i in transform)
 		{
 			var x = i.position.x + e.delta.x;
 			Drag(x, i);
