@@ -1,0 +1,12 @@
+Assets/FullInspector2*
+Assets/UnityTileMap*
+Temp*
+Obj*
+Library*
+*.csproj
+*.booproj
+*.unityproj
+*.sln
+*.suo
+*.userprefs
+*.user
