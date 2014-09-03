@@ -25,16 +25,17 @@ public class Flop : UIBehaviour, IDragHandler
 		}
 		if (Reorder)
 		{
-			var d = new Dictionary<int, Vector3>();
+			var list = new List<Transform>(Content.childCount);
 			for (int i = 0; i < Content.childCount; i++)
 			{
 				var child = Content.GetChild(i);
-				d.Add(i, child.localPosition);
+				list.Add(child);
 			}
 			var order = 0;
-			foreach (KeyValuePair<int, Vector3> i in d.OrderBy(key => Mathf.Abs(key.Value.x)))
+			var sorted = from i in list orderby Mathf.Abs(i.position.x) select i;
+			foreach (var i in sorted)
 			{
-				Content.GetChild(i.Key).SetSiblingIndex(d.Count - order++);
+				i.SetSiblingIndex(list.Count - order++);
 			}
 		}
 	}
