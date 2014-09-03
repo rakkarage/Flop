@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class Flop : UIBehaviour, IDragHandler
@@ -7,7 +6,6 @@ public class Flop : UIBehaviour, IDragHandler
 	public float Offset = 64f;
 	public Transform LookAt;
 	public Transform Content;
-	public bool Reorder = false;
 	protected override void Start()
 	{
 		for (int i = 0; i < Content.childCount; i++)
@@ -28,20 +26,11 @@ public class Flop : UIBehaviour, IDragHandler
 	}
 	private void Order()
 	{
-		if (Reorder)
+		var children = GetComponentsInChildren<Transform>();
+		var sorted = from child in children orderby child.position.z descending select child;
+		for (int i = 0; i < sorted.Count(); i++)
 		{
-			var list = new List<Transform>(Content.childCount);
-			for (int i = 0; i < Content.childCount; i++)
-			{
-				var child = Content.GetChild(i);
-				list.Add(child);
-			}
-			var order = 0;
-			var sorted = from i in list orderby i.position.z select i;
-			foreach (var i in sorted)
-			{
-				i.SetSiblingIndex(list.Count - order++ - 1);
-			}
+			sorted.ElementAt(i).SetSiblingIndex(i);
 		}
 	}
 	private void Drag(float x, Transform t)
