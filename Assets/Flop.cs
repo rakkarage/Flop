@@ -15,6 +15,7 @@ public class Flop : UIBehaviour, IDragHandler
 			var x = i * Offset;
 			Drag(x, Content.GetChild(i));
 		}
+		Order();
 	}
 	public void Drag(PointerEventData e)
 	{
@@ -23,6 +24,10 @@ public class Flop : UIBehaviour, IDragHandler
 			var x = i.position.x + e.delta.x;
 			Drag(x, i);
 		}
+		Order();
+	}
+	private void Order()
+	{
 		if (Reorder)
 		{
 			var list = new List<Transform>(Content.childCount);
@@ -32,10 +37,10 @@ public class Flop : UIBehaviour, IDragHandler
 				list.Add(child);
 			}
 			var order = 0;
-			var sorted = from i in list orderby Mathf.Abs(i.position.x) select i;
+			var sorted = from i in list orderby i.position.z select i;
 			foreach (var i in sorted)
 			{
-				i.SetSiblingIndex(list.Count - order++);
+				i.SetSiblingIndex(list.Count - order++ - 1);
 			}
 		}
 	}
