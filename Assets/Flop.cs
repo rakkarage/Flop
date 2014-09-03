@@ -19,7 +19,7 @@ public class Flop : UIBehaviour, IDragHandler
 	{
 		foreach (Transform i in transform)
 		{
-			var x = i.position.x + e.delta.x;
+			var x = i.localPosition.x + e.delta.x;
 			Drag(x, i);
 		}
 		Order();
@@ -27,7 +27,7 @@ public class Flop : UIBehaviour, IDragHandler
 	private void Order()
 	{
 		var children = GetComponentsInChildren<Transform>();
-		var sorted = from child in children orderby child.position.z descending select child;
+		var sorted = from child in children orderby child.localPosition.z descending select child;
 		for (int i = 0; i < sorted.Count(); i++)
 		{
 			sorted.ElementAt(i).SetSiblingIndex(i);
@@ -35,8 +35,8 @@ public class Flop : UIBehaviour, IDragHandler
 	}
 	private void Drag(float x, Transform t)
 	{
-		t.position = new Vector3(x, transform.position.y, x < 0 ? -x : x);
-		t.rotation = Quaternion.LookRotation(LookAt.position - t.position);
+		t.localPosition = new Vector3(x, transform.localPosition.y, x < 0 ? -x : x);
+		t.localRotation = Quaternion.LookRotation(t.localPosition - LookAt.localPosition);
 	}
 	public void OnDrag(PointerEventData e)
 	{
