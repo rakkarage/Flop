@@ -7,6 +7,7 @@ public class Flop : UIBehaviour, IDragHandler
 	public Transform LookAt;
 	protected override void Start()
 	{
+		base.Start();
 		for (int i = 0; i < transform.childCount; i++)
 		{
 			var x = i * Offset;
