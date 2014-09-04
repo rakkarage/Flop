@@ -36,7 +36,6 @@ public class Flop : UIBehaviour, IDragHandler
 	private void Drag(float x, Transform t)
 	{
 		t.localPosition = new Vector3(x, transform.localPosition.y, x < 0 ? -x : x);
-		t.localRotation = Quaternion.LookRotation(t.localPosition - LookAt.localPosition);
 	}
 	public void OnDrag(PointerEventData e)
 	{
